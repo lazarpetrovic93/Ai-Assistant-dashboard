@@ -8,6 +8,7 @@ interface ReportContextType {
   addReport: (report: Report) => void;
   updateReport: (id: string, report: Partial<Report>) => void;
   reorderReports: (oldIndex: number, newIndex: number) => void;
+  deleteReport: (id: string) => void;
 }
 
 const ReportContext = createContext<ReportContextType | undefined>(undefined);
@@ -36,6 +37,10 @@ export const ReportProvider = ({ children }: { children: ReactNode }) => {
     });
   }, [setReports]);
 
+  const deleteReport = useCallback((id: string) => {
+    setReports(prevReports => prevReports.filter(report => report.id !== id));
+  }, [setReports]);
+
   return (
     <ReportContext.Provider
       value={{
@@ -43,6 +48,7 @@ export const ReportProvider = ({ children }: { children: ReactNode }) => {
         addReport,
         updateReport,
         reorderReports,
+        deleteReport,
       }}
     >
       {children}

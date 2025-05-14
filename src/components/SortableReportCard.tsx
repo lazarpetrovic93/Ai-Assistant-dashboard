@@ -12,21 +12,30 @@ import {
 import {
   Edit as EditIcon,
   DragIndicator as DragIcon,
+  Delete as DeleteIcon,
 } from "@mui/icons-material";
 import type { SortableReportCardProps } from "../types/report";
+import { useReportContext } from '../context/ReportContext';
 
 export const SortableReportCard = ({
   report,
   onEdit,
 }: SortableReportCardProps) => {
-  const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({ 
-      id: report.id,
-      transition: {
-        duration: 150,
-        easing: 'cubic-bezier(0.25, 1, 0.5, 1)',
-      },
-    });
+  const { deleteReport } = useReportContext();
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ 
+    id: report.id,
+    transition: {
+      duration: 150,
+      easing: 'cubic-bezier(0.25, 1, 0.5, 1)',
+    },
+  });
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -34,12 +43,18 @@ export const SortableReportCard = ({
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
+    opacity: isDragging ? 0.5 : 1,
   };
 
-  const handleEdit = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
+  const handleEdit = () => {
     onEdit();
+  };
+
+  const handleDelete = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (window.confirm('Are you sure you want to delete this report?')) {
+      deleteReport(report.id);
+    }
   };
 
   return (
@@ -70,8 +85,6 @@ export const SortableReportCard = ({
             alignItems: 'center',
             justifyContent: 'center',
             cursor: 'grab',
-            opacity: 1,
-            transition: 'opacity 0.2s',
             height: '100%',
             width: '100%',
             '&:active': {
@@ -90,19 +103,45 @@ export const SortableReportCard = ({
         </Box>
       </Box>
 
-      <IconButton
-        onClick={handleEdit}
-        size={isMobile ? "small" : "medium"}
+      <Box
+        className="action-buttons"
         sx={{
-          position: "absolute",
+          position: 'absolute',
+          top: 8,
           right: 8,
-          top: "50%",
-          transform: "translateY(-50%)",
+          display: 'flex',
+          gap: 1,
           zIndex: 1,
         }}
       >
-        <EditIcon fontSize={isMobile ? "small" : "medium"} />
-      </IconButton>
+        <IconButton
+          size="small"
+          onClick={handleEdit}
+          sx={{
+            bgcolor: 'background.paper',
+            '&:hover': {
+              bgcolor: 'primary.light',
+              color: 'primary.contrastText',
+            },
+          }}
+        >
+          <EditIcon fontSize={isMobile ? "small" : "medium"} />
+        </IconButton>
+
+        <IconButton
+          size="small"
+          onClick={handleDelete}
+          sx={{
+            bgcolor: 'background.paper',
+            '&:hover': {
+              bgcolor: 'error.light',
+              color: 'error.contrastText',
+            },
+          }}
+        >
+          <DeleteIcon fontSize={isMobile ? "small" : "medium"} />
+        </IconButton>
+      </Box>
 
       <CardContent sx={{ p: isMobile ? 1.5 : 2, pl: 6, pr: 6 }}>
         <Typography
