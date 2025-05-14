@@ -1,125 +1,82 @@
 # AI Dashboard
 
-A modern web application for managing reports with AI assistance.
+A modern dashboard application for managing and generating reports with AI assistance.
 
 ## Features
 
-- Create, edit reports
+### Report Management
+- Create, edit, and delete reports
 - Drag and drop to reorder reports
-- Rich text editor for report content
-- AI assistant integration with OpenAI
-- Responsive design with Material UI
+- Responsive design for all screen sizes
+- Persistent storage using localStorage
+- Rich text content support (paragraphs, lists, tables, images)
 
-## Prerequisites
+### AI Assistant
+- Interactive chat interface
+- Generate draft reports
+- Summarize existing reports
+- Responsive design with mobile optimization
+  - Fixed at bottom on mobile/tablet
+  - Expandable on smaller screens
+  - Side panel on desktop
 
-- Node.js 18 or later
-- npm 9 or later
-- OpenAI API key
-- TinyMCE API key
+### UI/UX Features
+- Material UI components
+- Dark/Light theme support
+- Smooth animations and transitions
+- Drag and drop functionality
+- Responsive layout
+- Modern and clean design
 
-## Environment Variables
+## Getting Started
 
-Create a `.env` file in the root directory with the following variables:
-
-```env
-VITE_OPENAI_API_KEY=your_openai_api_key
-VITE_TINYMCE_API_KEY=your_tinymce_api_key
-```
-
-## Installation
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/ai-dashboard.git
-   cd ai-dashboard
-   ```
-
+1. Clone the repository
 2. Install dependencies:
    ```bash
    npm install
    ```
-
-3. Start the development server:
+3. Create a `.env` file in the root directory and add your OpenAI API key:
+   ```
+   VITE_OPENAI_API_KEY=your_api_key_here
+   ```
+4. Start the development server:
    ```bash
    npm run dev
    ```
 
-4. Open [http://localhost:5173](http://localhost:5173) in your browser.
+## Usage
 
-## Building for Production
+### Reports
+- Click "Add New Report" to create a report
+- Drag the handle on the left to reorder reports
+- Click the edit icon to modify a report
+- Click the delete icon to remove a report
+- Reports are automatically saved to localStorage
 
-```bash
-npm run build
-```
-
-The build artifacts will be stored in the `dist/` directory.
+### AI Assistant
+- Type your message and click "Send" to chat
+- Click "Generate Draft" to create a new report draft
+- Click "Summarize Content" to get a summary of all reports
+- On mobile/tablet:
+  - Assistant is fixed at the bottom
+  - Click to expand/collapse
+- On desktop:
+  - Assistant appears as a side panel
+  - Always visible
 
 ## Technologies Used
 
 - React
 - TypeScript
 - Material UI
-- TinyMCE
 - OpenAI API
+- dnd-kit (drag and drop)
 - Vite
-- ESLint
-- Prettier
 
-## License
+## Development
 
-MIT
+- Built with Vite for fast development
+- TypeScript for type safety
+- ESLint and Prettier for code quality
+- Responsive design with Material UI breakpoints
 
-# React + TypeScript + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
